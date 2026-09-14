@@ -7,7 +7,6 @@ compare, and report digital evidence.
 
 - [`index.html`](./index.html) - interactive Case UNI-24 investigation lab
 - [`Digital-Forensics-101.pptx`](./Digital-Forensics-101.pptx) - presentation slides
-- [`roman-urdu-script.md`](./roman-urdu-script.md) - presenter script
 - [`evidence/`](./evidence/) - fictional evidence files used by the lab
 
 ## GitHub Pages
