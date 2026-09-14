@@ -1,0 +1,11 @@
+FICTIONAL MESSAGE EXPORT
+Channel: Campus Robotics Society / workshop-team
+Device timezone: PKT (UTC+05:00)
+
+M01 | 2026-08-24 19:12 | workshop_lead | Attendance uploaded. Five people came.
+M02 | 2026-08-25 12:06 | member_2      | The office copy shows six names now?
+M03 | 2026-08-25 12:09 | workshop_lead | I did not add anyone. I uploaded once.
+M04 | 2026-08-25 12:15 | member_2      | Sending it to the office to check.
+
+Export limitation: the account name records which account sent a message.
+It does not establish who was holding the device.

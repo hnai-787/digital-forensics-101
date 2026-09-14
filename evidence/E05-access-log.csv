@@ -1,0 +1,11 @@
+event_id,timestamp_utc,account,action,object,source_ip,object_sha256
+L01,2026-08-24T14:05:00Z,workshop_lead,login_success,portal,10.14.2.31,
+L02,2026-08-24T14:11:00Z,workshop_lead,upload,attendance.txt,10.14.2.31,642206b780054a1ec0a0939fe27139d1bb2d29152df983608c830607056d6331
+L03,2026-08-24T14:12:00Z,workshop_lead,logout,portal,10.14.2.31,
+L04,2026-08-24T18:40:00Z,office_desk,login_success,portal,10.14.9.4,
+L05,2026-08-24T18:44:00Z,office_desk,view,attendance.txt,10.14.9.4,
+L06,2026-08-24T18:45:00Z,office_desk,logout,portal,10.14.9.4,
+L07,2026-08-25T06:58:00Z,workshop_lead,login_failed,portal,203.0.113.77,
+L08,2026-08-25T07:01:00Z,workshop_lead,login_success,portal,203.0.113.77,
+L09,2026-08-25T07:03:00Z,workshop_lead,upload,attendance.txt,203.0.113.77,c3dde3be8fcd1ea8b37e5210ac8d8411934c80e423b7dd8a7122984377b32f37
+L10,2026-08-25T07:04:00Z,workshop_lead,logout,portal,203.0.113.77,

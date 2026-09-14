@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Case UNI-24 | Digital Forensics Lab</title>
+<style>
+:root{
+  --navy:#0e2d39;
+  --navy-2:#173d49;
+  --cream:#f7f3ea;
+  --paper:#fffdf8;
+  --ink:#162a34;
+  --muted:#60727a;
+  --teal:#159b95;
+  --mint:#79dcd3;
+  --orange:#ec8c26;
+  --line:#cbd6d7;
+  --soft:#e7f3f1;
+  --mono:Consolas,"SFMono-Regular","Courier New",monospace;
+  --sans:Arial,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font:17px/1.55 var(--sans)}
+a{color:inherit}
+button{font:inherit}
+.hero{background:var(--navy);color:#fff;border-bottom:6px solid var(--orange)}
+.hero-inner{max-width:1180px;margin:auto;padding:42px 28px 38px;display:grid;grid-template-columns:1fr 310px;gap:48px;align-items:end}
+.eyebrow{color:var(--mint);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.tag{display:inline-block;margin:24px 0 12px;padding:5px 12px;border-radius:3px;background:var(--orange);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:52px;line-height:1.02;margin:0 0 14px;letter-spacing:-.025em}
+.hero p{margin:0;max-width:720px;color:#d8e3e6;font-size:20px}
+.brief{border:1px solid #31515c;background:#133541;padding:22px}
+.brief-label{color:var(--mint);font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.brief strong{display:block;margin:6px 0 12px;font-size:28px}
+.brief p{font-size:15px;line-height:1.45;color:#d8e3e6}
+.shell{max-width:1180px;margin:0 auto;padding:34px 28px 72px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:44px}
+nav{position:sticky;top:18px;align-self:start}
+nav .label{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+nav a{display:grid;grid-template-columns:34px 1fr;gap:9px;padding:10px 0;border-bottom:1px solid var(--line);text-decoration:none;font-weight:700;font-size:14px}
+nav a span{color:var(--teal);font-family:var(--mono)}
+nav a:hover{color:var(--teal)}
+.case-note{margin-top:22px;padding:14px;border-left:3px solid var(--orange);background:#fff8ec;font-size:13px;color:var(--muted)}
+main{min-width:0}
+.objective{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-bottom:28px}
+.objective div{background:var(--paper);padding:18px}
+.objective b{display:block;color:var(--teal);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.step{background:var(--paper);border:1px solid var(--line);margin-bottom:22px;scroll-margin-top:18px}
+.step-head{display:grid;grid-template-columns:78px 1fr;min-height:98px;border-bottom:1px solid var(--line)}
+.num{display:grid;place-items:center;background:var(--navy);color:var(--mint);font:800 34px/1 var(--mono)}
+.step-title{padding:21px 24px}
+.step h2{font-size:29px;line-height:1.15;margin:0 0 4px;letter-spacing:-.015em}
+.step-title p{margin:0;color:var(--muted);font-size:15px}
+.body{padding:24px}
+.actions{margin:0 0 20px;padding-left:24px}
+.actions li{margin:0 0 8px;padding-left:4px}
+.command{position:relative;margin:12px 0 20px;background:var(--navy);color:#e8f3f4;border-left:5px solid var(--teal)}
+.command pre{margin:0;padding:18px 88px 18px 18px;overflow:auto;font:14px/1.55 var(--mono);white-space:pre-wrap}
+.copy{position:absolute;right:10px;top:10px;border:1px solid #52717b;background:transparent;color:var(--mint);padding:5px 9px;border-radius:3px;cursor:pointer;font-size:12px;font-weight:700}
+.copy:hover,.copy:focus{background:var(--navy-2);outline:2px solid var(--mint);outline-offset:1px}
+.check{margin-top:18px;padding:17px 18px;border-left:4px solid var(--teal);background:var(--soft)}
+.check.orange{border-left-color:var(--orange);background:#fff5e7}
+.check b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:5px}
+.check.orange b{color:#b75d00}
+.check p{margin:0}
+.hashes{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.hashes th,.hashes td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+.hashes th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.hashes td:nth-child(2){font-family:var(--mono);word-break:break-all}
+.same{color:var(--teal);font-weight:800}
+.different{color:#b75d00;font-weight:800}
+.question{font-weight:700;margin:18px 0 6px}
+.answer-lines{display:grid;gap:10px;margin-top:12px}
+.answer-lines div{min-height:42px;border-bottom:1px solid #9aabad}
+details{margin-top:18px;border:1px solid var(--line);background:#fff}
+summary{cursor:pointer;padding:13px 16px;font-weight:800;color:var(--teal)}
+details[open] summary{border-bottom:1px solid var(--line)}
+.reveal{padding:16px 18px}
+.reveal p,.reveal ul{margin-top:0}
+.finding{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.finding div{border-top:4px solid var(--teal);background:var(--soft);padding:16px}
+.finding div:last-child{border-top-color:var(--orange);background:#fff5e7}
+.finding h3{margin:0 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.05em}
+.finding p{margin:0;font-size:15px}
+.footer{background:var(--navy);color:#d8e3e6;padding:22px 28px;text-align:center;font-size:14px}
+.footer strong{color:var(--mint)}
+code{font-family:var(--mono);font-size:.92em}
+@media(max-width:850px){
+  .hero-inner{grid-template-columns:1fr}.brief{max-width:560px}
+  .shell{grid-template-columns:1fr}nav{position:static;display:none}
+  .objective,.finding{grid-template-columns:1fr}h1{font-size:40px}
+}
+@media(max-width:560px){
+  body{font-size:16px}.hero-inner,.shell{padding-left:18px;padding-right:18px}
+  h1{font-size:34px}.step-head{grid-template-columns:58px 1fr}.num{font-size:25px}
+  .step-title,.body{padding:18px}.step h2{font-size:24px}.command pre{padding-right:18px;padding-top:54px}
+}
+@media print{.copy,nav{display:none}.shell{display:block;padding:20px}.step{break-inside:avoid}.hero-inner{display:block}.brief{margin-top:20px}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">AUCSS / Digital Forensics 101</div>
+      <span class="tag">Hands-on investigation</span>
+      <h1>Case UNI-24</h1>
+      <p>A workshop attendance file changed from five names to six. Determine what changed, when it changed, and what the evidence cannot establish.</p>
+    </div>
+    <aside class="brief">
+      <span class="brief-label">Your evidence</span>
+      <strong>7 files</strong>
+      <p>Use Windows PowerShell. Run every command on the working copy.</p>
+    </aside>
+  </div>
+</header>
+
+<div class="shell">
+  <nav aria-label="Investigation steps">
+    <div class="label">Investigation</div>
+    <a href="#step1"><span>01</span>Preserve</a>
+    <a href="#step2"><span>02</span>Verify</a>
+    <a href="#step3"><span>03</span>Compare</a>
+    <a href="#step4"><span>04</span>Identify</a>
+    <a href="#step5"><span>05</span>Build timeline</a>
+    <a href="#step6"><span>06</span>Check custody</a>
+    <a href="#step7"><span>07</span>Report</a>
+    <div class="case-note">Fictional teaching case. Examine only the supplied files.</div>
+  </nav>
+
+  <main>
+    <section class="objective" aria-label="Case questions">
+      <div><b>Question 1</b>Which files match?</div>
+      <div><b>Question 2</b>When did the extra name appear?</div>
+      <div><b>Question 3</b>Who made the change?</div>
+    </section>
+
+    <section class="step" id="step1">
+      <header class="step-head"><div class="num">01</div><div class="step-title"><h2>Preserve the evidence</h2><p>Create a working copy before examining anything.</p></div></header>
+      <div class="body">
+        <ol class="actions">
+          <li>Keep <code>student-lab.html</code> beside the <code>evidence</code> folder.</li>
+          <li>Open this folder in File Explorer.</li>
+          <li>Right-click empty space and choose <b>Open in Terminal</b>.</li>
+          <li>Run:</li>
+        </ol>
+        <div class="command"><button class="copy" type="button">Copy</button><pre>Copy-Item .\evidence .\working-copy -Recurse
+Set-Location .\working-copy
+Get-ChildItem | Select-Object Name, Length</pre></div>
+        <div class="check"><b>Check</b><p>You are inside <code>working-copy</code> and can see E01 through E07 plus <code>SHA256SUMS.txt</code>.</p></div>
+      </div>
+    </section>
+
+    <section class="step" id="step2">
+      <header class="step-head"><div class="num">02</div><div class="step-title"><h2>Verify the files</h2><p>Calculate SHA-256 values and compare them with the supplied manifest.</p></div></header>
+      <div class="body">
+        <div class="command"><button class="copy" type="button">Copy</button><pre>Get-FileHash .\E0* -Algorithm SHA256 |
+  Sort-Object Path |
+  Format-Table Hash, Path -AutoSize
+
+Get-Content .\SHA256SUMS.txt</pre></div>
+        <div class="check"><b>Check</b><p>Every calculated value must match the manifest. Stop and re-extract the pack if any value differs.</p></div>
+        <details>
+          <summary>Expected hash pattern</summary>
+          <div class="reveal">
+            <table class="hashes">
+              <thead><tr><th>File</th><th>SHA-256</th><th>Result</th></tr></thead>
+              <tbody>
+                <tr><td>E01</td><td>642206b780054a1ec0a0939fe27139d1bb2d29152df983608c830607056d6331</td><td class="same">matches E03</td></tr>
+                <tr><td>E02</td><td>c3dde3be8fcd1ea8b37e5210ac8d8411934c80e423b7dd8a7122984377b32f37</td><td class="different">different</td></tr>
+                <tr><td>E03</td><td>642206b780054a1ec0a0939fe27139d1bb2d29152df983608c830607056d6331</td><td class="same">matches E01</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="step" id="step3">
+      <header class="step-head"><div class="num">03</div><div class="step-title"><h2>Compare the attendance files</h2><p>Find the exact content difference.</p></div></header>
+      <div class="body">
+        <div class="command"><button class="copy" type="button">Copy</button><pre>cmd /c fc /n E01-attendance-final.txt E02-attendance-submitted.txt
+cmd /c fc /n E01-attendance-final.txt E03-attendance-backup.txt</pre></div>
+        <p class="question">Record the changed line and the matching pair.</p>
+        <div class="answer-lines" aria-hidden="true"><div></div><div></div></div>
+        <details>
+          <summary>Check result</summary>
+          <div class="reveal"><p><b>E02 adds line 11:</b> <code>6. F. Qureshi</code></p><p><b>E01 and E03:</b> no differences.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="step" id="step4">
+      <header class="step-head"><div class="num">04</div><div class="step-title"><h2>Identify the real file type</h2><p>Compare the filename with the first bytes.</p></div></header>
+      <div class="body">
+        <div class="command"><button class="copy" type="button">Copy</button><pre>Format-Hex .\E04-workshop-photo.jpg | Select-Object -First 2</pre></div>
+        <div class="check orange"><b>Check</b><p>The filename ends in <code>.jpg</code>. The first bytes are <code>89 50 4E 47</code>, the signature for a PNG file.</p></div>
+        <p class="question">Extract the readable export comment.</p>
+        <div class="command"><button class="copy" type="button">Copy</button><pre>$path = (Resolve-Path '.\E04-workshop-photo.jpg').Path
+$text = [Text.Encoding]::ASCII.GetString(
+  [IO.File]::ReadAllBytes($path)
+)
+[regex]::Match($text, 'Exported from CampusCam v2 on \d{4}-\d{2}-\d{2}').Value</pre></div>
+        <details>
+          <summary>Check result</summary>
+          <div class="reveal"><p><code>Exported from CampusCam v2 on 2026-08-24</code></p><p>This text is file content. It does not prove when the image was captured.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="step" id="step5">
+      <header class="step-head"><div class="num">05</div><div class="step-title"><h2>Build the timeline</h2><p>Order the log events and convert the message times to UTC.</p></div></header>
+      <div class="body">
+        <ol class="actions">
+          <li>Show logins and uploads in time order.</li>
+        </ol>
+        <div class="command"><button class="copy" type="button">Copy</button><pre>Import-Csv .\E05-access-log.csv |
+  Where-Object action -In 'login_failed','login_success','upload' |
+  Sort-Object timestamp_utc |
+  Format-Table event_id,timestamp_utc,account,action,source_ip,object_sha256 -AutoSize</pre></div>
+        <ol class="actions" start="2">
+          <li>Read the messages.</li>
+          <li>Convert M01 and M02 from PKT to UTC.</li>
+        </ol>
+        <div class="command"><button class="copy" type="button">Copy</button><pre>Get-Content .\E06-message-export.txt
+
+([datetimeoffset]'2026-08-24T19:12:00+05:00').UtcDateTime
+([datetimeoffset]'2026-08-25T12:06:00+05:00').UtcDateTime</pre></div>
+        <div class="check"><b>Key correlation</b><p>L02 contains the E01/E03 hash. L09 contains the E02 hash.</p></div>
+        <p class="question">Write the sequence from the first upload to the message about six names.</p>
+        <div class="answer-lines" aria-hidden="true"><div></div><div></div><div></div></div>
+        <details>
+          <summary>Check timeline</summary>
+          <div class="reveal">
+            <ul>
+              <li>24 Aug 14:11 UTC — L02 uploads the five-name version.</li>
+              <li>24 Aug 14:12 UTC — M01 says five people attended.</li>
+              <li>25 Aug 06:58 UTC — L07 records a failed login from 203.0.113.77.</li>
+              <li>25 Aug 07:01 UTC — L08 records a successful login from the same address.</li>
+              <li>25 Aug 07:03 UTC — L09 uploads the six-name version.</li>
+              <li>25 Aug 07:06 UTC — M02 asks why the office copy has six names.</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section class="step" id="step6">
+      <header class="step-head"><div class="num">06</div><div class="step-title"><h2>Check the handling record</h2><p>Confirm who handled the evidence, when, and what action they recorded.</p></div></header>
+      <div class="body">
+        <div class="command"><button class="copy" type="button">Copy</button><pre>Import-Csv .\E07-custody-log.csv | Format-Table -AutoSize</pre></div>
+        <div class="check"><b>Check</b><p>The record shows receipt, creation of a working copy, hash verification, and transfer of the training copy.</p></div>
+        <p class="question">Does this record identify who used the <code>workshop_lead</code> account during L09?</p>
+        <div class="answer-lines" aria-hidden="true"><div></div></div>
+      </div>
+    </section>
+
+    <section class="step" id="step7">
+      <header class="step-head"><div class="num">07</div><div class="step-title"><h2>Write the finding</h2><p>Separate direct observations, supported conclusions, and limits.</p></div></header>
+      <div class="body">
+        <div class="finding">
+          <div><h3>Observed</h3><p>State what the files show. Cite evidence IDs and event IDs.</p></div>
+          <div><h3>Supported</h3><p>State the conclusion that follows from those records.</p></div>
+          <div><h3>Not established</h3><p>State what these files cannot identify or prove.</p></div>
+        </div>
+        <div class="answer-lines" aria-hidden="true"><div></div><div></div><div></div><div></div></div>
+        <details>
+          <summary>Compare with the model finding</summary>
+          <div class="reveal">
+            <p><b>Observed:</b> E01 and E03 have the same SHA-256 and contain five names. E02 has a different SHA-256 and adds F. Qureshi. E05 L02 links the five-name hash to the first upload. L09 links the six-name hash to a second upload after L07 and L08.</p>
+            <p><b>Supported:</b> Two different versions of <code>attendance.txt</code> were uploaded. The six-name version appeared in the second upload at 07:03 UTC on 25 August.</p>
+            <p><b>Not established:</b> These files do not establish who operated the <code>workshop_lead</code> account or who added the extra name.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer class="footer"><strong>Preserve. Verify. Examine. Build the timeline. Report the limit.</strong></footer>
+<script>
+document.querySelectorAll('.command').forEach(block => {
+  const button = block.querySelector('.copy');
+  const code = block.querySelector('pre').innerText;
+  button.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+    } catch (_) {
+      const area = document.createElement('textarea');
+      area.value = code;
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      document.execCommand('copy');
+      area.remove();
+    }
+    button.textContent = 'Copied';
+    setTimeout(() => button.textContent = 'Copy', 1200);
+  });
+});
+</script>
+</body>
+</html>
