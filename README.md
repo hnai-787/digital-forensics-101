@@ -15,8 +15,6 @@ The interactive lab is designed to be published at:
 
 https://hnai-787.github.io/digital-forensics-101/
 
-The repository includes a GitHub Actions workflow that deploys the site to
-GitHub Pages whenever changes are pushed to `main`.
 
 ## Learning objectives
 
