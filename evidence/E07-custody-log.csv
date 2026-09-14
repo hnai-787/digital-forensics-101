@@ -2,4 +2,4 @@ record_id,timestamp_utc,handler,action,item,from_location,to_location,notes
 C01,2026-08-25T08:15:00Z,Nadia Khan,received,USB-UNI-24,Workshop Office,Forensics Desk,USB placed in evidence bag UNI-24
 C02,2026-08-25T08:24:00Z,Nadia Khan,created working copy,E01-E07,USB-UNI-24,Forensics Workstation,Original USB returned to evidence bag
 C03,2026-08-25T08:31:00Z,Nadia Khan,verified hashes,E01-E07,Forensics Workstation,Forensics Workstation,SHA-256 manifest created
-C04,2026-08-25T09:05:00Z,Omar Shah,received working copy,E01-E07,Nadia Khan,Training Room,Training copy verified against manifest
+C04,2026-08-25T09:05:00Z,Umair Shah,received working copy,E01-E07,Nadia Khan,Training Room,Training copy verified against manifest
